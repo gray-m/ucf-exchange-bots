@@ -24,7 +24,7 @@ def orders_from_target(target, book):
 
         orders.add(Sell(target_min_ask, book.bids[-1].quantity))
     else: #current_price > target
-        target_max_bid = 2*target - book.asks[-1].price
+        target_max_bid = 2*target - book.asks[0].price
         filter_above = lambda bid: bid.price > target_max_bid
         relevant_bids = filter(filter_above, book.bids)
         for bid in relevant_bids:
