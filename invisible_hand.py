@@ -36,7 +36,7 @@ def orders_from_target(target, book):
 
 
 def model_from_price_trajectory(samples):
-	models = dict()
+    models = dict()
     for asset in samples:
         data = samples[asset]
         X = np.array([data[i][0] for i in range(len(data))]).reshape(-1, 1)
