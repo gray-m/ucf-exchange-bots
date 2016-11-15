@@ -23,19 +23,19 @@ class PriceController(object):
     def orders_from_target(target, book):
         """return the orders necessary to achieve the price target."""
         orders = list() 
-        current_price = .5*(book.bids[-1].price + book.asks[0].price)
+        current_price = .5*(book.bids[0].price + book.asks[0].price)
 
         if current_price == target:
             return orders
         elif current_price < target:
             # need to make book.min_ask so that current_price' is target
-            target_min_ask = 2*target - book.bids[-1].price
+            target_min_ask = 2*target - book.bids[0].price
             filter_below = lambda ask: ask.price < target_min_ask
             relevant_asks = filter(filter_below, book.asks)
             for ask in relevant_asks:
                 orders.add(Buy(ask.price, ask.quantity))  
 
-            orders.add(Sell(target_min_ask, book.bids[-1].quantity))
+            orders.add(Sell(target_min_ask, book.bids[0].quantity))
         else: #current_price > target
             target_max_bid = 2*target - book.asks[0].price
             filter_above = lambda bid: bid.price > target_max_bid
